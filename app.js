@@ -17,7 +17,7 @@ app.use("/api", indexRouter)
 // const mongoURI = process.env.LOCAL_DB_ADDRESS
 const mongoURI = MONGODB_URI_PROD
 
-mongoose.connect(mongoURI, {useNewUrlParser: true}).then(()=>(
+mongoose.connect(mongoURI).then(()=>(
     console.log("mongoose connected")
 )).catch ((err) => {
     console.log("DB connection fail", err)
