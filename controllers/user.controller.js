@@ -23,13 +23,16 @@ userController.createUser = async(req, res) => {
 userController.getUser = async(req, res) => {
     try{
         const {userId} = req
+        // console.log("uuuu", userId)
         const user = await User.findById(userId)
         if(user) {
-            res.status(200).json({status: "success", user})
+            return res.status(200).json({status: "success", user})
+        } else {
+            return res.status(400).json({ status: "error", error: "Invalid token 실패!!" });
+            // throw new Error ("Invalid token 실패!!")
         }
-        throw new Error ("Invalid token")
     } catch(err) {
-        res.status(400).json({status: "fail", error: err.message})
+        res.status(400).json({status: "error", error: err.message})
     }
 }
 

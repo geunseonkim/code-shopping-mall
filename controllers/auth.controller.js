@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken")
 const User = require("../model/User")
 const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
 require("dotenv").config()
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
 
@@ -23,20 +23,22 @@ authController.loginWithEmail = async(req, res) => {
     }
 }
 
-authController.authenticate = (req, res, next) => {
+authController.authenticate = async(req, res, next) => {
     try{
         const tokenString = req.headers.authorization
         if(!tokenString) {
-            throw new Error ("Token is not valid")
+            throw new Error ("Token is not found")
         }
-        const token = tokenString.replace("Bearer ", "")
-        jwt.verify(token, JWT_SECRET_KEY, (err, payload) =>{
-            if(err) {
-                throw new Error ("invalid token")
+        const token = tokenString.replace("Bearer ","")
+        jwt.verify(token, JWT_SECRET_KEY, (error, payload) =>{
+            if(error) {
+                throw new Error ("invalid token", error.message)
             }
-            req.userID=payload._id
-        } )
-        next()
+            req.userId = payload._id
+            next()
+            // const {userId} = req
+            // console.log("uuuu", userId)
+        })
     } catch (err) {
         res.status(400).json({status: "fail", error: err.message})
     }
