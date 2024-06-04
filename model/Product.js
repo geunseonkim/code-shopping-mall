@@ -11,6 +11,10 @@ const ProductSchema = Schema({
         type: String,
         required: true
     },
+    size: {
+        type: Array,
+        required: true
+    },
     image: {
         type: String,
         required: true
@@ -27,7 +31,7 @@ const ProductSchema = Schema({
         type: String,
         required: true
     },
-    Stock: {
+    stock: {
         type: Object,
         required: true
     },
@@ -50,4 +54,4 @@ ProductSchema.methods.toJSON = function() {
 }
 
 const Product = mongoose.model("Product", ProductSchema)
-module.exports = "Product"
+module.exports = Product

@@ -12,7 +12,7 @@ userController.createUser = async(req, res) => {
         }
         const salt = bcrypt.genSaltSync(10)
         const hash = bcrypt.hashSync(password, salt)
-        const newUser = User({name, email, password:hash, level})
+        const newUser = new User({name, email, password:hash, level})
         await newUser.save()
         res.status(200).json({status: "success"})
     } catch (err) {
