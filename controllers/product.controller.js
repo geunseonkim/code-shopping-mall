@@ -43,5 +43,17 @@ productController.getProducts = async(req, res) => {
     }
 }
 
+productController.getProductById = async(req, res) => {
+    try {
+        const product = await Product.findById(req.params.id)
+        if (!product) {
+            throw new Error ("Product not found")
+        }
+        res.status(200).json({status: "success", data: product})
+    } catch (err) {
+        res.status(400).json({status: "fail", error: err.message});
+    }
+}
+
 
 module.exports = productController
