@@ -5,5 +5,6 @@ const productController = require("../controllers/product.controller")
 
 router.post("/", authController.authenticate, authController.checkAdminPermission, productController.createProduct)
 // 상품은 누구나 다 만들 수 없다!
+router.get("/", productController.getProducts)
 
 module.exports = router
