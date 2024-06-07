@@ -7,5 +7,7 @@ router.post("/", authController.authenticate, authController.checkAdminPermissio
 // 상품은 누구나 다 만들 수 없다!
 router.get("/", productController.getProducts)
 router.get("/:id", productController.getProductById)
+router.put("/:id", authController.authenticate, authController.checkAdminPermission, productController.updateProduct)
+router.delete("/:id",authController.authenticate, authController.checkAdminPermission, productController.deleteProduct)
 
 module.exports = router

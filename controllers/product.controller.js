@@ -1,6 +1,6 @@
 const Product = require("../model/Product")
 
-const PAGE_SIZE = 5
+const PAGE_SIZE = 3
 
 productController = {}
 
@@ -23,7 +23,7 @@ productController.getProducts = async(req, res) => {
         // } else {
         //     const products = await Product.find({})
         // }
-        const condition = name? {name:{$regex: name, $options:"i"}}:{}
+        const condition = name? {name:{$regex: name, $options:"i"}, isDeleted: false }: { isDeleted: false };
         let query = Product.find(condition)
         let response = {status: "success"}
         if (page) {
@@ -54,6 +54,31 @@ productController.getProductById = async(req, res) => {
         res.status(400).json({status: "fail", error: err.message});
     }
 }
+
+productController.updateProduct = async(req, res) => {
+    try {
+        const productId = req.params.id
+        const {sku, name, image, price, category, description, stock, size, status} = req.body
+        const product = await Product.findByIdAndUpdate({_id:productId}, {sku, name, image, price, category, description, stock, size, status}, {new: true})
+        if (!product) {
+            throw new Error ("Product not found")
+        }
+        res.status(200).json({status: "success", data: product})
+    } catch {
+        res.status(400).json({status: "fail", error: err.message});
+    }
+}
+
+productController.deleteProduct = async (req, res) => {
+    try {
+      const productId = req.params.id
+      const product = await Product.findByIdAndUpdate({ _id: productId }, { isDeleted: true })
+      if (!product) throw new Error("Product not found")
+      res.status(200).json({ status: "success" })
+    } catch (err) {
+      return res.status(400).json({ status: "fail", error: err.message })
+    }
+  };
 
 
 module.exports = productController
