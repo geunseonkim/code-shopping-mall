@@ -24,7 +24,7 @@ const OrderSchema = Schema({
         default: "preparing"
     },
     items: [{
-        productID: {
+        productId: {
             type: Schema.Types.ObjectId,
             ref: "Product"
         },
