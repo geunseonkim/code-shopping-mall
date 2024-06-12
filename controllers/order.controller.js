@@ -1,6 +1,7 @@
 const orderController = {};
 const Order = require("../model/Order");
 const { randomStringGenerator } = require("../utils/randomStringGenerator");
+const PAGE_SIZE = 5;
 
 orderController.createOrder = async (req, res) => {
   try {
