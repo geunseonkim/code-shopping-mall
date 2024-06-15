@@ -87,7 +87,7 @@ cartController.deleteCartItem = async (req, res) => {
     cart.items = cart.items.filter((item) => !item._id.equals(id));
 
     await cart.save();
-    res.status(200).json({ status: 200, cartItemQty: cart.items.length });
+    res.status(200).json({ status: "success", cartItemQty: cart.items.length });
   } catch (err) {
     return res.status(400).json({ status: "fail", error: err.message });
   }
@@ -111,9 +111,9 @@ cartController.editCartItem = async (req, res) => {
     if (index === -1) throw new Error("Can not find item");
     cart.items[index].qty = qty;
     await cart.save();
-    res.status(200).json({ status: 200, data: cart.items });
+    res.status(200).json({ status: "success", data: cart.items });
   } catch (err) {
-    return res.status(400).json({ status: "fail", err: error.message });
+    return res.status(400).json({ status: "fail", error: err.message });
   }
 };
 
