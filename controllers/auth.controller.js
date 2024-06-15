@@ -68,7 +68,6 @@ authController.authenticate = async (req, res, next) => {
         throw new Error("invalid token", error.message);
       }
       req.userId = payload._id;
-      // console.log("인증된 userId:", req.userId); // userId가 설정되었는지 로그로 확인
       next();
       // const {userId} = req
       // console.log("uuuu", userId)

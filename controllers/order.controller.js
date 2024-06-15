@@ -49,25 +49,22 @@ orderController.getOrder = async (req, res, next) => {
       },
     });
     const totalItemNum = await Order.find({ userId: userId }).count();
-
     const totalPageNum = Math.ceil(totalItemNum / PAGE_SIZE);
     res.status(200).json({ status: "success", data: orderList, totalPageNum });
-  } catch (error) {
-    return res.status(400).json({ status: "fail", error: error.message });
+  } catch (err) {
+    return res.status(400).json({ status: "fail", error: err.message });
   }
 };
 
 orderController.getOrderList = async (req, res, next) => {
   try {
     const { page, orderNum } = req.query;
-
     let condition = {};
     if (orderNum) {
       condition = {
         orderNum: { $regex: orderNum, $options: "i" },
       };
     }
-
     const orderList = await Order.find(condition)
       .populate("userId")
       .populate({
@@ -83,8 +80,8 @@ orderController.getOrderList = async (req, res, next) => {
     const totalItemNum = await Order.find(condition).count();
     const totalPageNum = Math.ceil(totalItemNum / PAGE_SIZE);
     res.status(200).json({ status: "success", data: orderList, totalPageNum });
-  } catch (error) {
-    return res.status(400).json({ status: "fail", error: error.message });
+  } catch (err) {
+    return res.status(400).json({ status: "fail", error: err.message });
   }
 };
 
@@ -99,8 +96,8 @@ orderController.updateOrder = async (req, res, next) => {
     );
     if (!order) throw new Error("Can't find order");
     res.status(200).json({ status: "success", data: order });
-  } catch (error) {
-    return res.status(400).json({ status: "fail", error: error.message });
+  } catch (err) {
+    return res.status(400).json({ status: "fail", error: err.message });
   }
 };
 
